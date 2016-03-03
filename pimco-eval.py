@@ -2,6 +2,9 @@ import pandas_datareader.data as web
 import datetime
 import pandas as pd
 import matplotlib.pyplot as plt
+from matplotlib import style
+
+style.use('fivethirtyeight')
 
 start = datetime.datetime(2015, 1, 1)
 end = datetime.datetime(2016, 3, 3)
