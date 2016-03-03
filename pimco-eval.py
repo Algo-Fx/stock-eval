@@ -1,19 +1,29 @@
 import pandas_datareader.data as web
 import datetime
 import pandas as pd
+import matplotlib.pyplot as plt
 
-start = datetime.datetime(2011, 1, 1)
+start = datetime.datetime(2015, 1, 1)
 end = datetime.datetime(2016, 3, 3)
 
-#symbols = pd.read_csv("./PIMCO Funds.csv", header=None)
-
-symbols = [['PIMCO ALL ASSET C', 'PASCX'], 
-           ['PIMCO CA INTERMEDIATE MUNI BOND C','PCFCX']]
+print('--> Reading symbol data')
+symbols = pd.read_csv("./PIMCO Funds.csv", header=None)
 
 data = {}
 
-for name, symbol in symbols:
-    ohlc = web.DataReader("PASCX", 'yahoo', start, end)
-    data[symbol] = ohlc
+print("--> reading price data")
+for index, row in symbols.iterrows():
+    symbol = row[1]
+    print("--> reading", symbol)
+    try:
+        ohlc = web.DataReader(symbol, 'yahoo', start, end)
+        data[symbol] = ohlc
+    except:   
+        print(symbol, "not readable----------------<")
 
-print (data['PASCX'])
+print("--> finished reading price data")
+
+print("--> plotting data")
+
+data['PASCX']['Close'].plot()
+plt.show()
